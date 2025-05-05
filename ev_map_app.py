@@ -1,0 +1,68 @@
+import pandas as pd
+import plotly.express as px
+import dash
+from dash import dcc, html, Input, Output
+import os
+
+# Set working directory
+try:
+    os.chdir(r'C:\Users\tmarable\OneDrive - University of Tennessee\Research\pd')
+except:
+    os.chdir(r'C:\Users\marab\OneDrive - University of Tennessee\Research\pd')
+
+# Load the weekly dataset
+df = pd.read_csv(r"data\created\stations_20250130.csv", low_memory=False)
+
+# Filter: remove zero/free prices and extreme outliers
+df = df[(df['station_rate'] > 0) & (df['station_rate'] < df['station_rate'].quantile(0.99))]
+
+# Add readable charger type
+df['charger_type'] = df['dcfc'].map({1: 'DCFC', 0: 'Level 2'})
+
+# Initialize Dash app
+app = dash.Dash(__name__)
+app.title = "EV Charging Station Prices"
+
+# Layout
+app.layout = html.Div([
+    html.H2("EV Charging Station Prices (Weekly Map)"),
+    dcc.RadioItems(
+        id='charger-filter',
+        options=[
+            {"label": "DCFC", "value": "DCFC"},
+            {"label": "Level 2", "value": "Level 2"}
+        ],
+        value="DCFC",
+        labelStyle={'display': 'inline-block', 'margin-right': '20px'}
+    ),
+    dcc.Graph(id='price-map')
+])
+
+# Callback
+@app.callback(
+    Output("price-map", "figure"),
+    Input("charger-filter", "value")
+)
+def update_map(charger_type):
+    filtered = df[df["charger_type"] == charger_type]
+
+    fig = px.scatter_mapbox(
+        filtered,
+        lat="latitude",
+        lon="longitude",
+        color="station_rate",
+        color_continuous_scale="Viridis",
+        hover_data={"station_rate": True},
+        zoom=4,
+        height=700
+    )
+    fig.update_layout(
+        mapbox_style="carto-positron",
+        margin={"r": 0, "t": 0, "l": 0, "b": 0},
+        coloraxis_colorbar=dict(title="Price ($/kWh)")
+    )
+    return fig
+
+# Run the server
+if __name__ == "__main__":
+    app.run(debug=True, port=8051)

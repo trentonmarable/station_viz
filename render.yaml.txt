@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: ev-map-app
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: python ev_map_app.py
