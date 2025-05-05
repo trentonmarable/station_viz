@@ -4,14 +4,15 @@ import dash
 from dash import dcc, html, Input, Output
 import os
 
-# Set working directory
-try:
-    os.chdir(r'C:\Users\tmarable\OneDrive - University of Tennessee\Research\pd')
-except:
-    os.chdir(r'C:\Users\marab\OneDrive - University of Tennessee\Research\pd')
-
 # Load the weekly dataset
-df = pd.read_csv(r"data\created\stations_20250130.csv", low_memory=False)
+files = glob.glob("stations_*.csv")
+dates = [re.findall(r"stations_(\d{8})\.csv", f) for f in files]
+dates = [d[0] for d in dates if d]
+latest_date = max(dates)
+latest_file = f"stations_{latest_date}.csv"
+
+# Load the latest file
+df = pd.read_csv(latest_file, low_memory=False)
 
 # Filter: remove zero/free prices and extreme outliers
 df = df[(df['station_rate'] > 0) & (df['station_rate'] < df['station_rate'].quantile(0.99))]
