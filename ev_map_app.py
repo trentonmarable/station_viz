@@ -68,4 +68,8 @@ def update_map(charger_type):
 
 # Run the server
 if __name__ == "__main__":
-    app.run(debug=True, port=8051)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 8050)),  # 8050 is fallback for local dev
+        debug=True
+    )
