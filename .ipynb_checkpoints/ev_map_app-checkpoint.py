@@ -20,7 +20,7 @@ df['tesla_type'] = df['tesla'].map({1: 'Tesla', 0: 'Non-Tesla'})
 
 # Initialize Dash app
 app = dash.Dash(__name__)
-app.title = f"Prices}"
+app.title = f"Prices — {latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:]}"
 app.index_string = '''
 <!DOCTYPE html>
 <html>
@@ -46,7 +46,10 @@ app.index_string = '''
 
 # Layout
 app.layout = html.Div([
-    html.H2(f" Prices in $/kWh. Last updated: {latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:]", style={"margin-bottom": "10px"}),
+    html.H2(
+        f"Prices in $/kWh. Last updated: {latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:]}",
+        style={"margin-bottom": "10px"}
+    ),
 
     html.Div([
         html.Label("Charger Type:"),
@@ -108,7 +111,14 @@ def update_map(selected_chargers, selected_tesla):
         color="station_rate",
         color_continuous_scale="Viridis",
         hover_name="hover_text",
-        hover_data={"station_rate": False, "latitude": False, "longitude": False, "state": False, "city": False, "ev_network": False},
+        hover_data={
+            "station_rate": False,
+            "latitude": False,
+            "longitude": False,
+            "state": False,
+            "city": False,
+            "ev_network": False
+        },
         zoom=3
     )
 
