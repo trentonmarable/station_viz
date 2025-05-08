@@ -62,10 +62,15 @@ def update_map(charger_type):
     fig.update_layout(
         mapbox_style="carto-positron",
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
-        coloraxis_colorbar=dict(title="Price ($/kWh)")
+        coloraxis_colorbar=dict(title="Price ($/kWh)"),
+        scrollZoom=True
     )
     return fig
 
 # Run the server
 if __name__ == "__main__":
-    app.run(debug=True, port=8051)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 8050)),  # 8050 is fallback for local dev
+        debug=True
+    )

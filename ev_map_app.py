@@ -62,7 +62,8 @@ def update_map(charger_type):
     fig.update_layout(
         mapbox_style="carto-positron",
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
-        coloraxis_colorbar=dict(title="Price ($/kWh)")
+        coloraxis_colorbar=dict(title="Price ($/kWh)"),
+        scrollZoom=True
     )
     return fig
 
