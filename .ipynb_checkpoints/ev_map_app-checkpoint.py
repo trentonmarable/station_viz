@@ -20,7 +20,7 @@ df['tesla_type'] = df['tesla'].map({1: 'Tesla', 0: 'Non-Tesla'})
 
 # Initialize Dash app
 app = dash.Dash(__name__)
-app.title = f"Prices in $/kWh — {latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:]}"
+app.title = f"Prices}"
 app.index_string = '''
 <!DOCTYPE html>
 <html>
@@ -29,7 +29,9 @@ app.index_string = '''
         <title>{%title%}</title>
         {%favicon%}
         {%css%}
-        <style>body { margin: 0; overflow: hidden; }</style>
+        <style>
+            html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        </style>
     </head>
     <body>
         {%app_entry%}
@@ -44,7 +46,7 @@ app.index_string = '''
 
 # Layout
 app.layout = html.Div([
-    html.H2("EV Charging Station Prices (Weekly Map)", style={"margin-bottom": "10px"}),
+    html.H2(f" Prices in $/kWh. Last updated: {latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:]", style={"margin-bottom": "10px"}),
 
     html.Div([
         html.Label("Charger Type:"),
@@ -69,9 +71,16 @@ app.layout = html.Div([
     dcc.Graph(
         id='price-map',
         config={"scrollZoom": True, "displayModeBar": False},
-        style={"height": "calc(100vh - 150px)", "width": "100%"}
+        style={"flex": "1", "minHeight": "300px"}
     )
-], style={"margin": "0px", "padding": "10px"})
+], style={
+    "margin": "0px",
+    "padding": "10px",
+    "height": "100vh",
+    "display": "flex",
+    "flexDirection": "column",
+    "overflow": "hidden"
+})
 
 # Callback
 @app.callback(
