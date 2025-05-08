@@ -18,12 +18,33 @@ df = df[(df['station_rate'] > 0) & (df['station_rate'] < df['station_rate'].quan
 df['charger_type'] = df['dcfc'].map({1: 'DCFC', 0: 'Level 2'})
 df['tesla_type'] = df['tesla'].map({1: 'Tesla', 0: 'Non-Tesla'})
 
-# Initialize app
+# Initialize Dash app
 app = dash.Dash(__name__)
-app.title = "Prices in $/kWh"
+app.title = f"Prices in $/kWh — {latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:]}"
+app.index_string = '''
+<!DOCTYPE html>
+<html>
+    <head>
+        {%metas%}
+        <title>{%title%}</title>
+        {%favicon%}
+        {%css%}
+        <style>body { margin: 0; overflow: hidden; }</style>
+    </head>
+    <body>
+        {%app_entry%}
+        <footer>
+            {%config%}
+            {%scripts%}
+            {%renderer%}
+        </footer>
+    </body>
+</html>
+'''
 
+# Layout
 app.layout = html.Div([
-    html.H2(f"Prices in $/kWh. Last updated: {latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:]}"),
+    html.H2("EV Charging Station Prices (Weekly Map)", style={"margin-bottom": "10px"}),
 
     html.Div([
         html.Label("Charger Type:"),
@@ -33,7 +54,7 @@ app.layout = html.Div([
             value=['DCFC', 'Level 2'],
             labelStyle={'display': 'inline-block', 'margin-right': '15px'}
         ),
-    ], style={'margin-bottom': '15px'}),
+    ], style={'margin-bottom': '5px'}),
 
     html.Div([
         html.Label("Tesla Status:"),
@@ -43,15 +64,16 @@ app.layout = html.Div([
             value=['Tesla', 'Non-Tesla'],
             labelStyle={'display': 'inline-block', 'margin-right': '15px'}
         ),
-    ], style={'margin-bottom': '15px'}),
+    ], style={'margin-bottom': '5px'}),
 
     dcc.Graph(
         id='price-map',
         config={"scrollZoom": True, "displayModeBar": False},
-        style={"height": "90vh", "width": "100%"}
+        style={"height": "calc(100vh - 150px)", "width": "100%"}
     )
-])
+], style={"margin": "0px", "padding": "10px"})
 
+# Callback
 @app.callback(
     Output("price-map", "figure"),
     Input("charger-filter", "value"),
@@ -84,10 +106,11 @@ def update_map(selected_chargers, selected_tesla):
     fig.update_layout(
         mapbox_style="carto-positron",
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
-        coloraxis_colorbar=dict(title="")  # removes colorbar title
+        coloraxis_colorbar=dict(title="")
     )
 
     return fig
 
+# Run app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8050)), debug=False)
