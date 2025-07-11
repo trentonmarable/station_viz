@@ -21,26 +21,28 @@ df['tesla_type'] = df['tesla'].map({1: 'Tesla', 0: 'Non-Tesla'})
 # Initialize Dash app
 app = dash.Dash(__name__)
 app.title = f"Prices — {latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:]}"
-app.index_string = '''
-<!DOCTYPE html>
-<html>
-    <head>
-        {%metas%}
-        <title>{%title%}</title>
-        {%favicon%}
-        {%css%}
-        <style>
-            html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-        </style>
-    </head>
-    <body>
-        {%app_entry%}
-        <footer>
-            {%config%}
-            {%scripts%}
-            {%renderer%}
-        </footer>
-    </body>
+app.index_string = '''
+<!DOCTYPE html>
+<html>
+    <head>
+        {%metas%}
+        <title>{%title%}</title>
+        {%favicon%}
+        {%css%}
+        <style>
+            html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        </style>
+    </head>
+    <body>
+        {%app_entry%}
+        <footer>
+            {%config%}
+            {%scripts%}
+            {%renderer%}
+        </footer>
+    </body>
+</html>
+'''  </body>
 </html>
 '''
 
