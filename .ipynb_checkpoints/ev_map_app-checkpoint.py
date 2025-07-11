@@ -47,7 +47,7 @@ app.index_string = '''
 # Layout
 app.layout = html.Div([
     html.H2(
-        f"Prices in $/kWh. Last updated: {latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:]}",
+        f"Prices in ¢/kWh. Last updated: {latest_date[:4]}-{latest_date[4:6]}-{latest_date[6:]}",
         style={"margin-bottom": "10px"}
     ),
 
@@ -73,7 +73,7 @@ app.layout = html.Div([
 
     dcc.Graph(
         id='price-map',
-        config={"scrollZoom": True, "displayModeBar": False},
+        config={"scrollZoom": True, "displayModeBar": True},
         style={"flex": "1", "minHeight": "300px"}
     )
 ], style={
@@ -98,7 +98,7 @@ def update_map(selected_chargers, selected_tesla):
     ].copy()
 
     filtered["hover_text"] = (
-        "$" + filtered["station_rate"].round(2).astype(str) + "/kWh<br>" +
+        (filtered["station_rate"] * 100).round(0).astype(int).astype(str) + "¢/kWh<br>" +
         "(" + filtered["latitude"].round(7).astype(str) + ", " + filtered["longitude"].round(7).astype(str) + ")<br>" +
         "Network: " + filtered["ev_network"].fillna("Unknown") + "<br>" +
         "State: " + filtered["state"]
@@ -108,8 +108,8 @@ def update_map(selected_chargers, selected_tesla):
         filtered,
         lat="latitude",
         lon="longitude",
-        color="station_rate",
-        color_continuous_scale="Viridis",
+        color=filtered["station_rate"] * 100,  # price in cents
+        color_continuous_scale=px.colors.diverging.RdYlGn[::-1],
         hover_name="hover_text",
         hover_data={
             "station_rate": False,
@@ -131,5 +131,12 @@ def update_map(selected_chargers, selected_tesla):
     return fig
 
 # Run app
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8050)), debug=False)
+if __name_#_ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("True", 805)), debug=True)
+    #app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8050)), debug=False) # Use for final version!!!
+
+
+
+#cd C:\Users\tmarable\OneDrive - University of Tennessee\Documents\GitHub\station_viz
+#python ev_map_app.py
+#Open http://localhost:8050
