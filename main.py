@@ -19,6 +19,7 @@ df_latest['tesla_type'] = df_latest['tesla'].map({1: 'Tesla', 0: 'Non-Tesla'})
 
 # Initialize app
 app = dash.Dash(__name__)
+server = app.server
 app.title = f"Prices — {latest_date}"
 app.index_string = '''
 <!DOCTYPE html>
