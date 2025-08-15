@@ -67,7 +67,8 @@ app.layout = html.Div([
 
     dcc.Graph(id="price-map", config={"scrollZoom": True, "displayModeBar": True}),
     html.P(
-        "The displayed stations can be filtered by category using the toggles above. "
+        "The displayed stations can be filtered by category using the toggles above. Hover over each"
+        "station for more details."
         "This map displays all quantified public station prices with free stations removed, "
         "including Level 2 (7-9kW) and DC Fast (50kW+) stations, as well as Tesla and non-Tesla stations.",
         style={"font-size": "0.85em", "color": "gray", "margin-top": "5px"}
@@ -79,16 +80,17 @@ app.layout = html.Div([
 
     dcc.Graph(id="ts-dcfc-l2", figure=generate_dcfc_l2_figure(), config={"displayModeBar": False}),
     html.P(
-        "Click on a category in the legend to remove it from the plot to focus on other categories. "
-        "Hover over each date for more details. This data contains no Tesla Level 2 stations. "
-        "In mid-April, Tesla updated its API to make scraping more difficult — hence, I had to begin pulling on a weekly basis, rather than daily.",
+        "Click on a category in the legend to hide it and better view variation in the remianing categories. "
+        "Hover over each date for more details."
+        "Due to Tesla API changes in mid-April, I switched from daily to weekly data pulls."
+        "In mid-May the AFDC cleaned up outdated station records, likely causing the large Level 2 price decrease. A similar event might be causing the decrease in non-Tesla DCFC stations, but I am yet to diagnosing this.",
         style={"font-size": "0.85em", "color": "gray", "margin-top": "5px"}
     ),
 
     dcc.Graph(id="ts-sup-non", figure=generate_sup_non_figure(), config={"displayModeBar": False}),
     html.P(
-        "Click on a category in the legend to remove it from the plot to focus on other categories. "
-        "Hover over each date for more details. One unique aspect of the scraped Tesla data is that "
+        "Click on a category in the legend to hide it and better view variation in the remianing categories. "
+        "Hover over each date for more details. One unique aspect of the scraped Tesla station data is that "
         "it distinguishes between prices paid by Tesla drivers and those paid by non-Tesla drivers. "
         "This difference is around 20¢/kWh.",
         style={"font-size": "0.85em", "color": "gray", "margin-top": "5px"}
