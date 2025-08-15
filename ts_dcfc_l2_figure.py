@@ -6,8 +6,8 @@ def generate_dcfc_l2_figure():
     df = pd.read_csv("all_stations.csv")
     df = df[(df['rate'] > 0) & (df['rate'] < df['rate'].quantile(0.99))]
     df['charger_category'] = df.apply(
-        lambda row: "DCFC (Tesla station)" if row['dcfc'] == 1 and row['ev_network'] == "Tesla"
-        else "DCFC (Non-Tesla station)" if row['dcfc'] == 1
+        lambda row: "DC Fast (Tesla station)" if row['dcfc'] == 1 and row['ev_network'] == "Tesla"
+        else "DC Fast (Non-Tesla station)" if row['dcfc'] == 1
         else "Level 2",
         axis=1
     )
@@ -19,7 +19,7 @@ def generate_dcfc_l2_figure():
     )
 
     fig = go.Figure()
-    colors = {"DCFC (Tesla station)": "#FF0000", "DCFC (Non-Tesla station)": "#DAA520", "Level 2": "#1f77b4"}
+    colors = {"DC Fast (Tesla station)": "#FF0000", "DC Fast (Non-Tesla station)": "#DAA520", "Level 2": "#1f77b4"}
 
     for col in grouped.columns:
         fig.add_trace(go.Scatter(
@@ -33,7 +33,7 @@ def generate_dcfc_l2_figure():
         ))
 
     fig.update_layout(
-        title={'text': "DCFC vs Level 2", 'x': 0.5},
+        title={'text': "DC Fast vs Level 2 Stations", 'x': 0.5},
         xaxis_title="Date",
         yaxis_title="¢/kWh",
         height=500,

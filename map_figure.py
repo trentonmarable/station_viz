@@ -10,7 +10,7 @@ def generate_map_figure(selected_chargers, selected_teslas):
     # Filter and preprocess
     df = df[(df['rate'] > 0) & (df['rate'] < df['rate'].quantile(0.99))]
     df['tesla'] = (df['ev_network'] == "Tesla").astype(int)
-    df['charger_type'] = df['dcfc'].map({1: 'DCFC', 0: 'Level 2'})
+    df['charger_type'] = df['dcfc'].map({1: 'DC Fast', 0: 'Level 2'})
     df['tesla_type'] = df['tesla'].map({1: 'Tesla', 0: 'Non-Tesla'})
 
     # Apply filters

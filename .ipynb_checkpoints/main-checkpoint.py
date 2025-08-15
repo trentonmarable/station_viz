@@ -67,7 +67,7 @@ app.layout = html.Div([
 
     dcc.Graph(id="price-map", config={"scrollZoom": True, "displayModeBar": True}),
     html.P(
-        "The displayed stations can be filtered by category using the toggles above. Hover over each"
+        "The displayed stations can be filtered by category using the toggles above. Hover over each "
         "station for more details."
         "This map displays all quantified public station prices with free stations removed, "
         "including Level 2 (7-9kW) and DC Fast (50kW+) stations, as well as Tesla and non-Tesla stations.",

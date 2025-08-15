@@ -57,11 +57,11 @@ def generate_sup_non_figure():
         name='All other stations',
         line=dict(color='#1f77b4'),
         marker=dict(color='#1f77b4'),
-        hovertemplate='All other stations: %{y:.1f}¢/kWh<extra></extra>'
+        hovertemplate='All other DC Fast stations: %{y:.1f}¢/kWh<extra></extra>'
     ))
 
     fig.update_layout(
-        title={'text': "Superchargers vs Non-Tesla DCFC", 'x': 0.5},
+        title={'text': "Tesla Superchargers vs Non-Tesla DC Fast Stations", 'x': 0.5},
         xaxis_title="Date",
         yaxis_title="¢/kWh",
         height=500,
