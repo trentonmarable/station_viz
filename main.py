@@ -14,7 +14,7 @@ latest_date = df['date'].max().strftime("%Y-%m-%d")
 # Get filter options
 df_latest = df[df['date'] == df['date'].max()].copy()
 df_latest['tesla'] = (df_latest['ev_network'] == "Tesla").astype(int)
-df_latest['charger_type'] = df_latest['dcfc'].map({1: 'DCFC', 0: 'Level 2'})
+df_latest['charger_type'] = df_latest['dcfc'].map({1: 'DC Fast', 0: 'Level 2'})
 df_latest['tesla_type'] = df_latest['tesla'].map({1: 'Tesla', 0: 'Non-Tesla'})
 
 # Initialize app
