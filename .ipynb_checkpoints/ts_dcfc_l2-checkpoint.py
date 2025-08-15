@@ -145,5 +145,5 @@ if __name__ == "__main__":
 
 
 #cd C:\Users\tmarable\OneDrive - University of Tennessee\Documents\GitHub\station_viz
-#python ev_ts_app.py
+#python ts_dcfc_l2.py
 #Open http://localhost:8050

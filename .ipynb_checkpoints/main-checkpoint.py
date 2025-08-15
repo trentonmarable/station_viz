@@ -66,13 +66,34 @@ app.layout = html.Div([
     ], style={"margin-bottom": "10px"}),
 
     dcc.Graph(id="price-map", config={"scrollZoom": True, "displayModeBar": True}),
+    html.P(
+        "The displayed stations can be filtered by category using the toggles above. "
+        "This map displays all quantified public station prices with free stations removed, "
+        "including Level 2 (7-9kW) and DC Fast (50kW+) stations, as well as Tesla and non-Tesla stations.",
+        style={"font-size": "0.85em", "color": "gray", "margin-top": "5px"}
+    ),
 
     html.Hr(),
 
     html.H2("Average Prices Over Time", style={"margin-top": "30px", "margin-bottom": "10px"}),
-    
+
     dcc.Graph(id="ts-dcfc-l2", figure=generate_dcfc_l2_figure(), config={"displayModeBar": False}),
+    html.P(
+        "Click on a category in the legend to remove it from the plot to focus on other categories. "
+        "Hover over each date for more details. This data contains no Tesla Level 2 stations. "
+        "In mid-April, Tesla updated its API to make scraping more difficult — hence, I had to begin pulling on a weekly basis, rather than daily.",
+        style={"font-size": "0.85em", "color": "gray", "margin-top": "5px"}
+    ),
+
     dcc.Graph(id="ts-sup-non", figure=generate_sup_non_figure(), config={"displayModeBar": False}),
+    html.P(
+        "Click on a category in the legend to remove it from the plot to focus on other categories. "
+        "Hover over each date for more details. One unique aspect of the scraped Tesla data is that "
+        "it distinguishes between prices paid by Tesla drivers and those paid by non-Tesla drivers. "
+        "This difference is around 20¢/kWh.",
+        style={"font-size": "0.85em", "color": "gray", "margin-top": "5px"}
+    ),
+
 ], style={"padding": "15px", "maxWidth": "1000px", "margin": "auto"})
 
 # Callback — only updates the map
