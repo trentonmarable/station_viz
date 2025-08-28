@@ -40,3 +40,4 @@ def generate_dcfc_l2_figure():
         hovermode="x unified"
     )
     return fig
+ 

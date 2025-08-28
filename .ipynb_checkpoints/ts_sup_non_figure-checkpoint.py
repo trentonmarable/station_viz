@@ -54,7 +54,7 @@ def generate_sup_non_figure():
         x=nontesla_rate.index,
         y=nontesla_rate.values,
         mode='lines+markers',
-        name='All other stations',
+        name='All other DC Fast stations',
         line=dict(color='#1f77b4'),
         marker=dict(color='#1f77b4'),
         hovertemplate='All other DC Fast stations: %{y:.1f}¢/kWh<extra></extra>'

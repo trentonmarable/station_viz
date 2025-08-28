@@ -55,3 +55,4 @@ def generate_map_figure(selected_chargers, selected_teslas):
     )
 
     return fig
+ 
